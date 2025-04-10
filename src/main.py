@@ -10,6 +10,7 @@ from clip import get_clip_predictions
 from image_dataset import get_image_dataset
 from collections import Counter
 from street_clip import get_street_clip_predictions
+from log_dataset import log_dataset_to_file
 
 
 def main(run_folder: Path):
@@ -24,6 +25,12 @@ def main(run_folder: Path):
     print(f"Test batches: {test_ds.cardinality().numpy()}")
     print(f"Class names: {class_names}")
     print(f"Num classes: {num_classes}")
+
+    log_dataset_to_file(
+        {"training": train_ds, "validation": val_ds, "test": test_ds},
+        class_names,
+        run_folder,
+    )
 
     if Config.RUN_RESNET:
         model = create_panorama_resnet(
@@ -73,7 +80,9 @@ def main(run_folder: Path):
         print("Generating report for most common guess")
         train_labels = np.concatenate([y.numpy() for _, y in train_ds], axis=0)
         most_common_class, count = Counter(train_labels).most_common(1)[0]
-        print(f"Most common class in training set: {class_names[most_common_class]}, index: {most_common_class}, count: {count}")
+        print(
+            f"Most common class in training set: {class_names[most_common_class]}, index: {most_common_class}, count: {count}"
+        )
         y_common_pred = np.full_like(y_test_true, most_common_class)
         save_report(y_test_true, y_common_pred, run_folder, "common", class_names)
 
@@ -93,8 +102,16 @@ def main(run_folder: Path):
     # Evaluate on StreetCLIP
     if Config.RUN_STREET_CLIP:
         print("Generating report for StreetCLIP")
-        y_true_street_clip, y_pred_street_clip = get_street_clip_predictions(test_ds, class_names)
-        save_report(y_true_street_clip, y_pred_street_clip, run_folder, "STREET_CLIP", class_names)
+        y_true_street_clip, y_pred_street_clip = get_street_clip_predictions(
+            test_ds, class_names
+        )
+        save_report(
+            y_true_street_clip,
+            y_pred_street_clip,
+            run_folder,
+            "STREET_CLIP",
+            class_names,
+        )
 
 
 if __name__ == "__main__":
