@@ -9,9 +9,9 @@ class Config:
 
     # Data
     DATA_PATH: Path = Path(r"random_streetview_preprocessed_1008x336")
-    BATCH_SIZE: int = 32
-    TEST_SIZE: float = 0.15
-    VAL_SIZE: float = 0.15
+    BATCH_SIZE: int = 16  # DO NOT CHANGE
+    TEST_SIZE: float = 0.15  # DO NOT CHANGE
+    VAL_SIZE: float = 0.15  # DO NOT CHANGE
 
     # Model
     NUM_EPOCHS: int = 50

@@ -9,6 +9,7 @@ from plot import plot_training_history
 from clip import get_clip_predictions
 from image_dataset import get_image_dataset
 from collections import Counter
+from street_clip import get_street_clip_predictions
 
 
 def main(run_folder: Path):
@@ -84,8 +85,15 @@ def main(run_folder: Path):
 
     # Evaluate on CLIP
     if Config.RUN_CLIP:
+        print("Generating report for CLIP")
         y_true_clip, y_pred_clip = get_clip_predictions(test_ds, class_names)
         save_report(y_true_clip, y_pred_clip, run_folder, "CLIP", class_names)
+
+    # Evaluate on StreetCLIP
+    if Config.RUN_STREET_CLIP:
+        print("Generating report for StreetCLIP")
+        y_true_street_clip, y_pred_street_clip = get_street_clip_predictions(test_ds, class_names)
+        save_report(y_true_street_clip, y_pred_street_clip, run_folder, "STREET_CLIP", class_names)
 
 
 if __name__ == "__main__":
@@ -93,5 +101,5 @@ if __name__ == "__main__":
     run_folder = Config.RUN_PATH / time_stamp
     run_folder.mkdir()
 
-    print("GPUs Available:", tf.config.list_physical_devices('GPU'))
+    # print("GPUs Available:", tf.config.list_physical_devices("GPU"))
     main(run_folder)
