@@ -1,0 +1,11 @@
+numpy
+pandas
+scipy
+pillow
+matplotlib
+scikit-learn
+tensorflow
+pyarrow
+transformers
+tf-keras
+# pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
