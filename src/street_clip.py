@@ -36,7 +36,6 @@ def get_street_clip_predictions(
     for image_batch, true_labels in tqdm(test_ds):
         batch_images = []
 
-        # TODO: We crop the images
         for image in image_batch:
             pil_image = tensor_to_cropped_pil_image(
                 image
@@ -54,8 +53,6 @@ def get_street_clip_predictions(
 
         # Get predicted class indices
         logits_per_image = outputs.logits_per_image  # Image-text similarity scores
-        # probs = tf.nn.softmax(logits_per_image, axis=1)  # Convert to probabilities
-        # predicted_idx = tf.argmax(probs, axis=1).numpy()
         probs = torch.softmax(logits_per_image, dim=1)
         predicted_idx = torch.argmax(probs, dim=1).cpu().numpy()
 

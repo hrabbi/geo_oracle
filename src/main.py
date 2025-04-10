@@ -72,7 +72,8 @@ def main(run_folder: Path):
     if Config.RUN_COMMON:
         print("Generating report for most common guess")
         train_labels = np.concatenate([y.numpy() for _, y in train_ds], axis=0)
-        most_common_class = Counter(train_labels).most_common(1)[0][0]
+        most_common_class, count = Counter(train_labels).most_common(1)[0]
+        print(f"Most common class in training set: {class_names[most_common_class]}, index: {most_common_class}, count: {count}")
         y_common_pred = np.full_like(y_test_true, most_common_class)
         save_report(y_test_true, y_common_pred, run_folder, "common", class_names)
 
