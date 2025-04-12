@@ -3,8 +3,31 @@ import tensorflow as tf
 import numpy as np
 from tqdm import tqdm
 import torch
+from PIL import Image
 
-from clip import tensor_to_cropped_pil_image
+
+def tensor_to_cropped_pil_336x336_image(image: tf.Tensor) -> Image.Image:
+    """
+    Crop 1008x336 panorama image to 336x336 (take center image)
+
+    Args:
+        image (tf.Tensor): _description_
+
+    Returns:
+        Image.Image: _description_
+    """
+    image = tf.cast(image, tf.uint8).numpy()  # Convert to NumPy
+    img = Image.fromarray(image)
+
+    width, height = img.size
+    crop_width = width // 3
+    left = crop_width
+    right = 2 * crop_width
+
+    # Area (left, upper, right, lower)
+    area = (left, 0, right, height)
+    img = img.crop(area)
+    return img
 
 
 def get_street_clip_predictions(
@@ -12,6 +35,7 @@ def get_street_clip_predictions(
 ) -> np.ndarray:
     """
     Run StreetCLIP on test data (336x336 images)
+    Prompt supplied to StreetCLIP: "{country}"
 
     Args:
         test_ds (tf.data.Dataset): _description_
@@ -26,6 +50,7 @@ def get_street_clip_predictions(
     # Load CLIP model and processor
     model = CLIPModel.from_pretrained("geolocal/StreetCLIP")
     processor = CLIPProcessor.from_pretrained("geolocal/StreetCLIP")
+    model.eval()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
@@ -37,7 +62,7 @@ def get_street_clip_predictions(
         batch_images = []
 
         for image in image_batch:
-            pil_image = tensor_to_cropped_pil_image(
+            pil_image = tensor_to_cropped_pil_336x336_image(
                 image
             )  # Convert TensorFlow tensor to PIL Image
             batch_images.append(pil_image)

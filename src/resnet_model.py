@@ -33,7 +33,7 @@ def process_segment(segment):
     x = tf.keras.layers.ReLU()(x)
     x = tf.keras.layers.MaxPooling2D(pool_size=3, strides=2, padding="same")(x)
 
-    x = residual_block(x, 128, stride=1)
+    x = residual_block(x, 64, stride=1)
     return x
 
 
@@ -45,17 +45,18 @@ def create_panorama_resnet(input_shape, num_classes):
 
     # Split each panorama image into three side by side images and process them individually
     split_axis = 2  # Width dimension
-    left, middle, right = tf.split(x, num_or_size_splits=3, axis=split_axis)
+    left, middle, right = tf.keras.layers.Lambda(lambda x: tf.split(x, num_or_size_splits=3, axis=split_axis))(x)
 
     left = process_segment(left)
     middle = process_segment(middle)
     right = process_segment(right)
 
     # Join segments
-    x = tf.concat([left, middle, right], axis=split_axis)
+    #x = tf.concat([left, middle, right], axis=split_axis)
+    x = tf.keras.layers.Lambda(lambda tensors: tf.concat(tensors, axis=split_axis))([left, middle, right])
 
-    x = residual_block(x, 128, stride=2)
-    x = residual_block(x, 64, stride=1)
+    x = residual_block(x, 64, stride=2)
+    x = residual_block(x, 32, stride=1)
 
     x = tf.keras.layers.GlobalAveragePooling2D()(x)
     outputs = tf.keras.layers.Dense(num_classes, activation="softmax")(x)

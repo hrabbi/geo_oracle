@@ -7,9 +7,9 @@ from tqdm import tqdm
 import torch
 
 
-def tensor_to_cropped_pil_image(image: tf.Tensor) -> Image.Image:
+def tensor_to_cropped_pil_224x224_image(image: tf.Tensor) -> Image.Image:
     """
-    Crop 1008x336 panorama image to 336x336 (take center image)
+    Crop 1008x336 panorama image to 336x336 (take center image) and resize to 224x224
 
     Args:
         image (tf.Tensor): _description_
@@ -28,13 +28,15 @@ def tensor_to_cropped_pil_image(image: tf.Tensor) -> Image.Image:
     # Area (left, upper, right, lower)
     area = (left, 0, right, height)
     img = img.crop(area)
-
+    img = img.resize((224, 224), resample=Image.BILINEAR)
     return img
 
 
 def get_clip_predictions(test_ds: tf.data.Dataset, class_labels: list) -> np.ndarray:
     """
-    Run OpenAi CLIP (large patch 14) on test data
+    Run OpenAi CLIP (openai/clip-vit-large-patch14) on test data
+    Model takes in 224x224 images
+    Prompt supplied to CLIP: "A street view image in {country}"
 
     Args:
         test_ds (tf.data.Dataset): _description_
@@ -52,6 +54,7 @@ def get_clip_predictions(test_ds: tf.data.Dataset, class_labels: list) -> np.nda
     # Load CLIP model and processor
     model = CLIPModel.from_pretrained("openai/clip-vit-large-patch14")
     processor = CLIPProcessor.from_pretrained("openai/clip-vit-large-patch14")
+    model.eval()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
@@ -63,7 +66,7 @@ def get_clip_predictions(test_ds: tf.data.Dataset, class_labels: list) -> np.nda
         batch_images = []
 
         for image in image_batch:
-            pil_image = tensor_to_cropped_pil_image(
+            pil_image = tensor_to_cropped_pil_224x224_image(
                 image
             )  # Convert TensorFlow tensor to PIL Image
             batch_images.append(pil_image)

@@ -11,7 +11,7 @@ from image_dataset import get_image_dataset
 from collections import Counter
 from street_clip import get_street_clip_predictions
 from log_dataset import log_dataset_to_file
-
+from geo_oracle import get_geo_oracle_predictions
 
 def main(run_folder: Path):
 
@@ -47,18 +47,18 @@ def main(run_folder: Path):
             metrics=["accuracy"],
         )
 
-        # early_stopping = tf.keras.callbacks.EarlyStopping(
-        #     monitor="val_accuracy",
-        #     patience=3,
-        #     restore_best_weights=True,
-        #     verbose=1,
-        # )
+        early_stopping = tf.keras.callbacks.EarlyStopping(
+            monitor="val_accuracy",
+            patience=5,
+            restore_best_weights=True,
+            verbose=1,
+        )
 
         history = model.fit(
             train_ds,
             epochs=Config.NUM_EPOCHS,
             validation_data=val_ds,
-            # callbacks=[early_stopping],
+            callbacks=[early_stopping],
         )
 
         model_save_path = run_folder / "resnet_model.keras"
@@ -69,12 +69,14 @@ def main(run_folder: Path):
     # Create classification reports
     y_test_true = np.concatenate([y.numpy() for _, y in test_ds], axis=0)
 
+    # TODO: make model that go through each batch etc.
     # Random
     if Config.RUN_RANDOM:
         print("Generating report for random guess")
         y_random_pred = np.random.randint(num_classes, size=len(y_test_true))
         save_report(y_test_true, y_random_pred, run_folder, "random", class_names)
 
+    # TODO: make model that go through each batch etc.
     # Most common
     if Config.RUN_COMMON:
         print("Generating report for most common guess")
@@ -90,14 +92,14 @@ def main(run_folder: Path):
     if Config.RUN_RESNET:
         print("Generating report for model")
         y_pred_model = model.predict(test_ds)
-        y_pred_model = np.argmax(y_pred_model, axis=1)
+        y_pred_model = np.argmax(y_pred_model, axis=1) # TODO: fix
         save_report(y_test_true, y_pred_model, run_folder, "model", class_names)
 
     # Evaluate on CLIP
     if Config.RUN_CLIP:
         print("Generating report for CLIP")
         y_true_clip, y_pred_clip = get_clip_predictions(test_ds, class_names)
-        save_report(y_true_clip, y_pred_clip, run_folder, "CLIP", class_names)
+        save_report(y_true_clip, y_pred_clip, run_folder, "CLIP_224x224", class_names)
 
     # Evaluate on StreetCLIP
     if Config.RUN_STREET_CLIP:
@@ -109,9 +111,25 @@ def main(run_folder: Path):
             y_true_street_clip,
             y_pred_street_clip,
             run_folder,
-            "STREET_CLIP",
+            "STREET_CLIP_336x336",
             class_names,
         )
+
+    # Evaluate on GeoOracle
+    if Config.RUN_GEO_ORACLE:
+        print("Generating report for GeoOracle")
+        y_true_geo_oracle, y_pred_geo_oracle, y_true_country_name, y_pred_top3_names = get_geo_oracle_predictions(test_ds, class_names)
+        save_report(y_true_geo_oracle, y_pred_geo_oracle, run_folder, "GeoOracle", class_names)
+
+        top_3_true = []
+        top_3_pred = []
+        for true_country_name, top_3_country_names in zip(y_true_country_name, y_pred_top3_names):
+            top_3_true.append(1)
+            if true_country_name in top_3_country_names:
+                top_3_pred.append(1)
+            else:
+                top_3_pred.append(0)
+        save_report(top_3_true, top_3_pred, run_folder, "GeoOracleTop3", ["True", "False"])
 
 
 if __name__ == "__main__":

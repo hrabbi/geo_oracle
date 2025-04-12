@@ -51,6 +51,6 @@ def main(dataset_path: Path, preprocessed_dataset_path: Path):
 
 
 if __name__ == "__main__":
-    dataset_path = Path(r"random_streetview_images_pano_v0.0.2/data")
+    dataset_path = Config.DATASET_PATH
     preprocessed_dataset_path = Config.DATA_PATH
     main(dataset_path, preprocessed_dataset_path)
