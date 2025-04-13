@@ -25,12 +25,12 @@ class Config:
     NUM_EPOCHS: int = 35
 
     #
-    RUN_RESNET: bool = False
-    RUN_RANDOM: bool = False
-    RUN_COMMON: bool = False
-    RUN_CLIP: bool = False
-    RUN_STREET_CLIP: bool = False
-    RUN_GEO_ORACLE: bool = False
+    RUN_RANDOM: bool = True
+    RUN_COMMON: bool = True
+    RUN_RESNET: bool = True
+    RUN_CLIP: bool = True
+    RUN_STREET_CLIP: bool = True
+    RUN_GEO_ORACLE: bool = True
 
     # GeoOracle CLIP model
     HUGGING_FACE_CLIP_MODEL: str = "openai/clip-vit-large-patch14-336"

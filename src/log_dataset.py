@@ -22,8 +22,9 @@ def log_dataset_to_file(datasets: dict, class_names: list, run_folder: Path):
             batch_size = labels.shape[0]
             total_samples += batch_size
 
-            for label in labels.numpy():
-                class_counts[class_names[label]] += 1
+            for label in labels:
+                country_name = class_names[int(label.numpy())]
+                class_counts[country_name] += 1
 
         log_data["splits"][split_name] = {
             "total_samples": total_samples,

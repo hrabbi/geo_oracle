@@ -1,3 +1,4 @@
+from baseline import get_most_common_predictions, get_random_predictions
 from config import Config
 import numpy as np
 import tensorflow as tf
@@ -67,16 +68,14 @@ def main(run_folder: Path):
         plot_training_history(history, run_folder, "model_training_plot.png")
 
     # Create classification reports
-    y_test_true = np.concatenate([y.numpy() for _, y in test_ds], axis=0)
+    test_ds = test_ds.cache() # Important!
 
-    # TODO: make model that go through each batch etc.
     # Random
     if Config.RUN_RANDOM:
         print("Generating report for random guess")
-        y_random_pred = np.random.randint(num_classes, size=len(y_test_true))
-        save_report(y_test_true, y_random_pred, run_folder, "random", class_names)
+        y_random_true, y_random_pred = get_random_predictions(test_ds, class_names)
+        save_report(y_random_true, y_random_pred, run_folder, "random", class_names)
 
-    # TODO: make model that go through each batch etc.
     # Most common
     if Config.RUN_COMMON:
         print("Generating report for most common guess")
@@ -85,12 +84,13 @@ def main(run_folder: Path):
         print(
             f"Most common class in training set: {class_names[most_common_class]}, index: {most_common_class}, count: {count}"
         )
-        y_common_pred = np.full_like(y_test_true, most_common_class)
-        save_report(y_test_true, y_common_pred, run_folder, "common", class_names)
+        y_common_true, y_common_pred = get_most_common_predictions(test_ds, most_common_class)
+        save_report(y_common_true, y_common_pred, run_folder, "common", class_names)
 
     # Evaluate model and get report
     if Config.RUN_RESNET:
         print("Generating report for model")
+        y_test_true = np.concatenate([y.numpy() for _, y in test_ds], axis=0)
         y_pred_model = model.predict(test_ds)
         y_pred_model = np.argmax(y_pred_model, axis=1) # TODO: fix
         save_report(y_test_true, y_pred_model, run_folder, "model", class_names)
@@ -129,7 +129,7 @@ def main(run_folder: Path):
                 top_3_pred.append(1)
             else:
                 top_3_pred.append(0)
-        save_report(top_3_true, top_3_pred, run_folder, "GeoOracleTop3", ["True", "False"])
+        save_report(top_3_true, top_3_pred, run_folder, "GeoOracleTop3", ["False", "True"])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,351 @@
+{
+  "Andorra": {
+    "precision": 0.4098360655737705,
+    "recall": 0.8333333333333334,
+    "f1-score": 0.5494505494505495,
+    "support": 30.0
+  },
+  "Argentina": {
+    "precision": 0.2391304347826087,
+    "recall": 0.39285714285714285,
+    "f1-score": 0.2972972972972973,
+    "support": 28.0
+  },
+  "Australia": {
+    "precision": 0.3103448275862069,
+    "recall": 0.3333333333333333,
+    "f1-score": 0.32142857142857145,
+    "support": 27.0
+  },
+  "Bangladesh": {
+    "precision": 0.36666666666666664,
+    "recall": 0.5641025641025641,
+    "f1-score": 0.4444444444444444,
+    "support": 39.0
+  },
+  "Belgium": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 31.0
+  },
+  "Bhutan": {
+    "precision": 0.17073170731707318,
+    "recall": 0.56,
+    "f1-score": 0.2616822429906542,
+    "support": 25.0
+  },
+  "Botswana": {
+    "precision": 0.44,
+    "recall": 0.36666666666666664,
+    "f1-score": 0.4,
+    "support": 30.0
+  },
+  "Brazil": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 21.0
+  },
+  "Bulgaria": {
+    "precision": 0.25,
+    "recall": 0.08823529411764706,
+    "f1-score": 0.13043478260869565,
+    "support": 34.0
+  },
+  "Cambodia": {
+    "precision": 0.16071428571428573,
+    "recall": 0.23684210526315788,
+    "f1-score": 0.19148936170212766,
+    "support": 38.0
+  },
+  "Canada": {
+    "precision": 0.2727272727272727,
+    "recall": 0.08333333333333333,
+    "f1-score": 0.1276595744680851,
+    "support": 36.0
+  },
+  "Chile": {
+    "precision": 0.07142857142857142,
+    "recall": 0.04,
+    "f1-score": 0.05128205128205128,
+    "support": 25.0
+  },
+  "Colombia": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 22.0
+  },
+  "Croatia": {
+    "precision": 0.1388888888888889,
+    "recall": 0.14705882352941177,
+    "f1-score": 0.14285714285714285,
+    "support": 34.0
+  },
+  "Czech Republic": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 20.0
+  },
+  "Denmark": {
+    "precision": 0.09090909090909091,
+    "recall": 0.034482758620689655,
+    "f1-score": 0.05,
+    "support": 29.0
+  },
+  "Estonia": {
+    "precision": 0.13043478260869565,
+    "recall": 0.45,
+    "f1-score": 0.20224719101123595,
+    "support": 20.0
+  },
+  "Finland": {
+    "precision": 0.11764705882352941,
+    "recall": 0.06896551724137931,
+    "f1-score": 0.08695652173913043,
+    "support": 29.0
+  },
+  "France": {
+    "precision": 0.0547945205479452,
+    "recall": 0.12903225806451613,
+    "f1-score": 0.07692307692307693,
+    "support": 31.0
+  },
+  "Germany": {
+    "precision": 0.2911392405063291,
+    "recall": 0.8518518518518519,
+    "f1-score": 0.4339622641509434,
+    "support": 27.0
+  },
+  "Greece": {
+    "precision": 0.13333333333333333,
+    "recall": 0.2727272727272727,
+    "f1-score": 0.1791044776119403,
+    "support": 22.0
+  },
+  "Hong Kong": {
+    "precision": 0.10526315789473684,
+    "recall": 0.05,
+    "f1-score": 0.06779661016949153,
+    "support": 40.0
+  },
+  "Hungary": {
+    "precision": 0.20689655172413793,
+    "recall": 0.15384615384615385,
+    "f1-score": 0.17647058823529413,
+    "support": 39.0
+  },
+  "Iceland": {
+    "precision": 0.2807017543859649,
+    "recall": 0.7619047619047619,
+    "f1-score": 0.41025641025641024,
+    "support": 21.0
+  },
+  "Indonesia": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 24.0
+  },
+  "Ireland": {
+    "precision": 0.2288135593220339,
+    "recall": 0.7714285714285715,
+    "f1-score": 0.35294117647058826,
+    "support": 35.0
+  },
+  "Israel": {
+    "precision": 0.3157894736842105,
+    "recall": 0.2,
+    "f1-score": 0.24489795918367346,
+    "support": 30.0
+  },
+  "Italy": {
+    "precision": 0.125,
+    "recall": 0.05714285714285714,
+    "f1-score": 0.0784313725490196,
+    "support": 35.0
+  },
+  "Japan": {
+    "precision": 0.1111111111111111,
+    "recall": 0.09375,
+    "f1-score": 0.1016949152542373,
+    "support": 32.0
+  },
+  "Korea": {
+    "precision": 0.1016949152542373,
+    "recall": 0.3870967741935484,
+    "f1-score": 0.1610738255033557,
+    "support": 31.0
+  },
+  "Latvia": {
+    "precision": 0.2857142857142857,
+    "recall": 0.4117647058823529,
+    "f1-score": 0.3373493975903614,
+    "support": 34.0
+  },
+  "Lithuania": {
+    "precision": 0.05263157894736842,
+    "recall": 0.027777777777777776,
+    "f1-score": 0.03636363636363636,
+    "support": 36.0
+  },
+  "Malaysia": {
+    "precision": 0.04,
+    "recall": 0.03225806451612903,
+    "f1-score": 0.03571428571428571,
+    "support": 31.0
+  },
+  "Mexico": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 21.0
+  },
+  "Netherlands": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 35.0
+  },
+  "New Zealand": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 36.0
+  },
+  "Norway": {
+    "precision": 0.15384615384615385,
+    "recall": 0.17142857142857143,
+    "f1-score": 0.16216216216216217,
+    "support": 35.0
+  },
+  "Peru": {
+    "precision": 0.14583333333333334,
+    "recall": 0.1891891891891892,
+    "f1-score": 0.16470588235294117,
+    "support": 37.0
+  },
+  "Poland": {
+    "precision": 0.15384615384615385,
+    "recall": 0.0625,
+    "f1-score": 0.08888888888888889,
+    "support": 32.0
+  },
+  "Portugal": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 18.0
+  },
+  "Romania": {
+    "precision": 0.07692307692307693,
+    "recall": 0.030303030303030304,
+    "f1-score": 0.043478260869565216,
+    "support": 33.0
+  },
+  "Russian Federation": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 31.0
+  },
+  "Singapore": {
+    "precision": 0.2,
+    "recall": 0.3448275862068966,
+    "f1-score": 0.25316455696202533,
+    "support": 29.0
+  },
+  "Slovakia": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 28.0
+  },
+  "Slovenia": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 27.0
+  },
+  "South Africa": {
+    "precision": 0.20588235294117646,
+    "recall": 0.358974358974359,
+    "f1-score": 0.2616822429906542,
+    "support": 39.0
+  },
+  "Spain": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 23.0
+  },
+  "Swaziland": {
+    "precision": 0.5555555555555556,
+    "recall": 0.22727272727272727,
+    "f1-score": 0.3225806451612903,
+    "support": 22.0
+  },
+  "Sweden": {
+    "precision": 0.05128205128205128,
+    "recall": 0.1111111111111111,
+    "f1-score": 0.07017543859649122,
+    "support": 18.0
+  },
+  "Switzerland": {
+    "precision": 0.10526315789473684,
+    "recall": 0.11428571428571428,
+    "f1-score": 0.1095890410958904,
+    "support": 35.0
+  },
+  "Taiwan": {
+    "precision": 0.1875,
+    "recall": 0.10344827586206896,
+    "f1-score": 0.13333333333333333,
+    "support": 29.0
+  },
+  "Thailand": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 21.0
+  },
+  "Ukraine": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 24.0
+  },
+  "United Arab Emirates": {
+    "precision": 0.34210526315789475,
+    "recall": 0.3939393939393939,
+    "f1-score": 0.36619718309859156,
+    "support": 33.0
+  },
+  "United Kingdom": {
+    "precision": 0.16666666666666666,
+    "recall": 0.06896551724137931,
+    "f1-score": 0.0975609756097561,
+    "support": 29.0
+  },
+  "United States": {
+    "precision": 0.2,
+    "recall": 0.03225806451612903,
+    "f1-score": 0.05555555555555555,
+    "support": 31.0
+  },
+  "accuracy": 0.19249394673123488,
+  "macro avg": {
+    "precision": 0.1436972660874849,
+    "recall": 0.1894338475368754,
+    "f1-score": 0.14427292667738298,
+    "support": 1652.0
+  },
+  "weighted avg": {
+    "precision": 0.14980076809362322,
+    "recall": 0.19249394673123488,
+    "f1-score": 0.14948518684334453,
+    "support": 1652.0
+  }
+}

@@ -95,12 +95,12 @@ def get_geo_oracle_predictions(
                         ).to(device)
                         text_embs = F.normalize(text_embs, p=2, dim=-1)
                         sims = torch.matmul(image_features.unsqueeze(0), text_embs.T)
-                        avg_sim = sims.mean().item()
+                        #avg_sim = sims.mean().item()
                         # max_sim = sims.max().item()
-                        # top_k = 3
-                        # topk_sims, _ = torch.topk(sims, k=top_k, dim=1)  # shape: (1, k)
-                        # score = topk_sims.mean().item()
-                        country_scores[country] += avg_sim
+                        top_k = 5
+                        topk_sims, _ = torch.topk(sims, k=top_k, dim=1)
+                        score = topk_sims.mean().item()
+                        country_scores[country] += score
                     else:
                         country_scores[country] = 0
 
