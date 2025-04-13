@@ -1,14 +1,11 @@
 import json
 from pathlib import Path
-from config import Config
 
 
 def log_dataset_to_file(datasets: dict, class_names: list, run_folder: Path):
     log_data = {
         "metadata": {
             "classes": class_names,
-            "image_size": (Config.TARGET_HEIGHT, Config.TARGET_WIDTH),
-            "batch_size": Config.BATCH_SIZE,
         },
         "splits": {},
     }

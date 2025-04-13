@@ -6,7 +6,7 @@ from transformers import CLIPProcessor, CLIPModel
 import pickle
 from tqdm import tqdm
 from config import Config
-from links import links
+from utils import links
 import re
 
 

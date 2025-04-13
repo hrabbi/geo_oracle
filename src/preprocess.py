@@ -1,7 +1,7 @@
 from pathlib import Path
 import pandas as pd
 from tqdm import tqdm
-from iso_to_country_name import iso_to_country_name
+from utils import iso_to_country_name
 from PIL import Image
 import io
 from config import Config

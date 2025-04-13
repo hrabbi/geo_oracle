@@ -1,4 +1,3 @@
-# Load model directly
 from transformers import CLIPProcessor, CLIPModel
 from PIL import Image
 import tensorflow as tf

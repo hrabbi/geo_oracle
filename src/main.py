@@ -1,18 +1,23 @@
-from baseline import get_most_common_predictions, get_random_predictions
 from config import Config
 import numpy as np
 import tensorflow as tf
-from resnet_model import create_panorama_resnet
 from datetime import datetime
 from pathlib import Path
-from report import save_report
-from plot import plot_training_history
-from clip import get_clip_predictions
+
 from image_dataset import get_image_dataset
 from collections import Counter
-from street_clip import get_street_clip_predictions
-from log_dataset import log_dataset_to_file
-from geo_oracle import get_geo_oracle_predictions
+
+from utils import save_report, plot_training_history, log_dataset_to_file
+
+from models import (
+    get_most_common_predictions,
+    get_random_predictions,
+    create_panorama_resnet,
+    get_clip_predictions,
+    get_street_clip_predictions,
+    get_geo_oracle_predictions,
+)
+
 
 def main(run_folder: Path):
 
@@ -68,7 +73,7 @@ def main(run_folder: Path):
         plot_training_history(history, run_folder, "model_training_plot.png")
 
     # Create classification reports
-    test_ds = test_ds.cache() # Important!
+    test_ds = test_ds.cache()  # Important!
 
     # Random
     if Config.RUN_RANDOM:
@@ -84,7 +89,9 @@ def main(run_folder: Path):
         print(
             f"Most common class in training set: {class_names[most_common_class]}, index: {most_common_class}, count: {count}"
         )
-        y_common_true, y_common_pred = get_most_common_predictions(test_ds, most_common_class)
+        y_common_true, y_common_pred = get_most_common_predictions(
+            test_ds, most_common_class
+        )
         save_report(y_common_true, y_common_pred, run_folder, "common", class_names)
 
     # Evaluate model and get report
@@ -92,7 +99,7 @@ def main(run_folder: Path):
         print("Generating report for model")
         y_test_true = np.concatenate([y.numpy() for _, y in test_ds], axis=0)
         y_pred_model = model.predict(test_ds)
-        y_pred_model = np.argmax(y_pred_model, axis=1) # TODO: fix
+        y_pred_model = np.argmax(y_pred_model, axis=1)  # TODO: fix
         save_report(y_test_true, y_pred_model, run_folder, "model", class_names)
 
     # Evaluate on CLIP
@@ -118,18 +125,31 @@ def main(run_folder: Path):
     # Evaluate on GeoOracle
     if Config.RUN_GEO_ORACLE:
         print("Generating report for GeoOracle")
-        y_true_geo_oracle, y_pred_geo_oracle, y_true_country_name, y_pred_top3_names = get_geo_oracle_predictions(test_ds, class_names)
-        save_report(y_true_geo_oracle, y_pred_geo_oracle, run_folder, "GeoOracle", class_names)
+        y_true_geo_oracle, y_pred_geo_oracle, y_true_country_name, y_pred_top3_names = (
+            get_geo_oracle_predictions(test_ds, class_names)
+        )
+        save_report(
+            y_true_geo_oracle,
+            y_pred_geo_oracle,
+            run_folder,
+            "GeoOracle",
+            class_names,
+            True,
+        )
 
         top_3_true = []
         top_3_pred = []
-        for true_country_name, top_3_country_names in zip(y_true_country_name, y_pred_top3_names):
+        for true_country_name, top_3_country_names in zip(
+            y_true_country_name, y_pred_top3_names
+        ):
             top_3_true.append(1)
             if true_country_name in top_3_country_names:
                 top_3_pred.append(1)
             else:
                 top_3_pred.append(0)
-        save_report(top_3_true, top_3_pred, run_folder, "GeoOracleTop3", ["False", "True"])
+        save_report(
+            top_3_true, top_3_pred, run_folder, "GeoOracleTop3", ["False", "True"]
+        )
 
 
 if __name__ == "__main__":
