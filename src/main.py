@@ -1,26 +1,24 @@
-from config import Config
-import numpy as np
-import tensorflow as tf
+from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
+import numpy as np
+import tensorflow as tf
+
+from config import Config
 from image_dataset import get_image_dataset
-from collections import Counter
-
-from utils import save_report, plot_training_history, log_dataset_to_file
-
 from models import (
-    get_most_common_predictions,
-    get_random_predictions,
     create_panorama_resnet,
     get_clip_predictions,
-    get_street_clip_predictions,
     get_geo_oracle_predictions,
+    get_most_common_predictions,
+    get_random_predictions,
+    get_street_clip_predictions,
 )
+from utils import log_dataset_to_file, plot_training_history, save_report
 
 
 def main(run_folder: Path):
-
     # Load and split dataset
     train_ds, val_ds, test_ds, class_names = get_image_dataset()
 
@@ -99,7 +97,7 @@ def main(run_folder: Path):
         print("Generating report for model")
         y_test_true = np.concatenate([y.numpy() for _, y in test_ds], axis=0)
         y_pred_model = model.predict(test_ds)
-        y_pred_model = np.argmax(y_pred_model, axis=1)  # TODO: fix
+        y_pred_model = np.argmax(y_pred_model, axis=1)
         save_report(y_test_true, y_pred_model, run_folder, "model", class_names)
 
     # Evaluate on CLIP

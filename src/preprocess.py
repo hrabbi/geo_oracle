@@ -1,10 +1,12 @@
-from pathlib import Path
-import pandas as pd
-from tqdm import tqdm
-from utils import iso_to_country_name
-from PIL import Image
 import io
+from pathlib import Path
+
+import pandas as pd
+from PIL import Image
+from tqdm import tqdm
+
 from config import Config
+from utils import iso_to_country_name
 
 
 def main(dataset_path: Path, preprocessed_dataset_path: Path):

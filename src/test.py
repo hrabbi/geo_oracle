@@ -1,12 +1,13 @@
-from collections import defaultdict
 import pickle
+from collections import defaultdict
+
+import numpy as np
 import torch
 import torch.nn.functional as F
-from transformers import CLIPProcessor, CLIPModel
 from PIL import Image
-import numpy as np
-from config import Config
+from transformers import CLIPModel, CLIPProcessor
 
+from config import Config
 
 if __name__ == "__main__":
     with open(Config.COUNTRY_EMBEDDINGS_PATH, "rb") as f:
@@ -60,11 +61,11 @@ if __name__ == "__main__":
             score = topk_sims.mean().item()
             # Average the similarity scores for this country.
             # alpha = 0.7
-            avg_sim = sims.mean().item()
+            # avg_sim = sims.mean().item()
             # max_sim = sims.max().item()
-            country_scores[
-                country
-            ] += score  # (alpha * max_sim + (1 - alpha) * avg_sim) # ** 2
+            country_scores[country] += (
+                score  # (alpha * max_sim + (1 - alpha) * avg_sim) # ** 2
+            )
 
     sorted_scores = sorted(country_scores.items(), key=lambda x: x[1], reverse=True)
 

@@ -1,5 +1,7 @@
 from pathlib import Path
+
 import matplotlib.pyplot as plt
+
 
 def plot_training_history(history, save_folder: Path, filename: str):
     """

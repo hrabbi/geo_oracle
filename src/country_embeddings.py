@@ -1,13 +1,15 @@
+import pickle
+import re
 from collections import defaultdict
+
 import pandas as pd
 import torch
 import torch.nn.functional as F
-from transformers import CLIPProcessor, CLIPModel
-import pickle
 from tqdm import tqdm
+from transformers import CLIPModel, CLIPProcessor
+
 from config import Config
 from utils import links
-import re
 
 
 def is_shared_feature(text: str, current_country: str, countries: list) -> bool:

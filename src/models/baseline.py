@@ -1,14 +1,15 @@
-import tensorflow as tf
-import numpy as np
-from tqdm import tqdm
 from typing import Tuple
+
+import numpy as np
+import tensorflow as tf
+from tqdm import tqdm
+
 from config import Config
 
 
 def get_random_predictions(
     test_ds: tf.data.Dataset, class_labels: list
 ) -> Tuple[np.ndarray, np.ndarray]:
-
     np.random.seed(Config.SEED)
 
     y_true = []
@@ -27,7 +28,6 @@ def get_random_predictions(
 def get_most_common_predictions(
     test_ds: tf.data.Dataset, most_common_country_index: int
 ) -> Tuple[np.ndarray, np.ndarray]:
-
     y_true = []
     y_pred = []
 

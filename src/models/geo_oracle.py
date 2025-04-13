@@ -1,13 +1,15 @@
 # Load model directly
+import pickle
 from collections import defaultdict
-from transformers import CLIPProcessor, CLIPModel
-from PIL import Image
-import tensorflow as tf
+
 import numpy as np
-from tqdm import tqdm
+import tensorflow as tf
 import torch
 import torch.nn.functional as F
-import pickle
+from PIL import Image
+from tqdm import tqdm
+from transformers import CLIPModel, CLIPProcessor
+
 from config import Config
 
 
@@ -71,7 +73,6 @@ def get_geo_oracle_predictions(
 
     # Split batches
     for image_batch, true_labels in tqdm(test_ds):
-
         batch_true_labels = true_labels.numpy()
 
         # Run on each image
@@ -95,7 +96,7 @@ def get_geo_oracle_predictions(
                         ).to(device)
                         text_embs = F.normalize(text_embs, p=2, dim=-1)
                         sims = torch.matmul(image_features.unsqueeze(0), text_embs.T)
-                        #avg_sim = sims.mean().item()
+                        # avg_sim = sims.mean().item()
                         # max_sim = sims.max().item()
                         top_k = 5
                         topk_sims, _ = torch.topk(sims, k=top_k, dim=1)

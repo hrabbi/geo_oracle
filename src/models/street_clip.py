@@ -1,9 +1,9 @@
-from transformers import CLIPProcessor, CLIPModel
-import tensorflow as tf
 import numpy as np
-from tqdm import tqdm
+import tensorflow as tf
 import torch
 from PIL import Image
+from tqdm import tqdm
+from transformers import CLIPModel, CLIPProcessor
 
 
 def tensor_to_cropped_pil_336x336_image(image: tf.Tensor) -> Image.Image:

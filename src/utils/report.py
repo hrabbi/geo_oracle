@@ -1,32 +1,44 @@
 import json
-
 from pathlib import Path
-from sklearn.metrics import classification_report
+
 import matplotlib.pyplot as plt
+from sklearn.metrics import classification_report
+
 
 def plot_model_f1_score_per_class(report, save_folder: Path, filename: str):
     labels = list(report.keys())
-    labels = [label for label in labels if label not in ["accuracy", "macro avg", "weighted avg"]]
+    labels = [
+        label
+        for label in labels
+        if label not in ["accuracy", "macro avg", "weighted avg"]
+    ]
 
-    f1_scores = [report[label]['f1-score'] for label in labels]
+    f1_scores = [report[label]["f1-score"] for label in labels]
 
     # Plotting
     plt.figure(figsize=(20, 6))
-    plt.bar(labels, f1_scores, color='blue')
-    plt.ylabel('F1 Score')
-    plt.title('F1 Score per Class')
+    plt.bar(labels, f1_scores, color="blue")
+    plt.ylabel("F1 Score")
+    plt.title("F1 Score per Class")
     plt.ylim(0, 1)
-    plt.xticks(rotation=45, ha='right')
-    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.xticks(rotation=45, ha="right")
+    plt.grid(axis="y", linestyle="--", alpha=0.7)
     plt.tight_layout()
-    #plt.show()
+    # plt.show()
 
-    save_path = save_folder / filename #   "f1_barchart.png"
+    save_path = save_folder / filename  #   "f1_barchart.png"
     plt.savefig(save_path)
     plt.close()
 
 
-def save_report(y_true, y_pred, folder: Path, name: str, class_names: list, save_f1_score_per_class: bool = False):
+def save_report(
+    y_true,
+    y_pred,
+    folder: Path,
+    name: str,
+    class_names: list,
+    save_f1_score_per_class: bool = False,
+):
     """
     Creates a sklearn classification report and saves to a json file
 
